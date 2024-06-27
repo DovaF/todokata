@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import AppHeader from "../AppHeader";
 import TaskList from "../TaskList";
 import Footer from "../Footer";
@@ -7,34 +7,43 @@ import "./TodoApp.css";
 
 const date = new Date();
 
-const TodoApp = () => {
-  const tasks = [
-    {
-      id: "cp",
-      className: "completed",
-      description: "Completed task",
-      created: formatDistanceToNow(date, { addSuffix: true }),
-    },
-    {
-      className: "editing",
-      description: "Editing task",
-      id: "ed",
-    },
-    {
-      description: "Active task",
-      id: "ac",
-      created: formatDistanceToNow(date, { addSuffix: true }),
-    },
-  ];
-  return (
-    <section className="todoapp">
-      <AppHeader />
-      <section className="main">
-        <TaskList tasks={tasks} />
-        <Footer />
-      </section>
-    </section>
-  );
-};
+export default class TodoApp extends Component {
+  state = {
+    tasks: [
+      {
+        id: "101",
+        description: "Completed task",
+        created: formatDistanceToNow(date, { addSuffix: true }),
+      },
+      {
+        className: "editing",
+        description: "Editing task",
+        id: "110",
+      },
+      {
+        description: "Active task",
+        id: "111",
+        created: formatDistanceToNow(date, { addSuffix: true }),
+      },
+    ],
+  };
 
-export default TodoApp;
+  deleteItem = (id) => {
+    this.setState(({ tasks }) => {
+      let newTasks = tasks.filter((item) => item.id !== id);
+      return { tasks: newTasks };
+    });
+  };
+
+  render() {
+    return (
+      <section className="todoapp">
+        <AppHeader />
+        <section className="main">
+          <TaskList tasks={this.state.tasks} onDeleted={this.deleteItem} />
+          <Footer />
+        </section>
+      </section>
+    );
+  }
+}
