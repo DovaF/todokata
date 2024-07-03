@@ -2,30 +2,34 @@ import React, { Component } from "react";
 import AppHeader from "../AppHeader";
 import TaskList from "../TaskList";
 import Footer from "../Footer";
-import { formatDistanceToNow } from "date-fns";
+
 import "./TodoApp.css";
 
-const date = new Date();
-
 export default class TodoApp extends Component {
+  maxId = 100;
   state = {
     tasks: [
-      {
-        id: "101",
-        description: "Completed task",
-        created: formatDistanceToNow(date, { addSuffix: true }),
-      },
-      {
-        className: "editing",
-        description: "Editing task",
-        id: "110",
-      },
-      {
-        description: "Active task",
-        id: "111",
-        created: formatDistanceToNow(date, { addSuffix: true }),
-      },
+      this.createTask("Completed Task"),
+      this.createTask("Editing task"),
+      this.createTask("Active Task"),
     ],
+  };
+
+  createTask(description) {
+    return {
+      id: this.maxId++,
+      description: description,
+      created: new Date(),
+    };
+  }
+
+  addTask = (description) => {
+    const newTask = this.createTask(description);
+    this.setState(({ tasks }) => {
+      return {
+        tasks: [...tasks.slice(), newTask],
+      };
+    });
   };
 
   deleteItem = (id) => {
@@ -38,7 +42,7 @@ export default class TodoApp extends Component {
   render() {
     return (
       <section className="todoapp">
-        <AppHeader />
+        <AppHeader onAdded={this.addTask} />
         <section className="main">
           <TaskList tasks={this.state.tasks} onDeleted={this.deleteItem} />
           <Footer />

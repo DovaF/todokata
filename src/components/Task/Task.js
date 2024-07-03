@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "./Task.css";
+import { formatDistanceToNowStrict } from "date-fns";
 
 export default class Task extends Component {
   state = {
     done: false,
+    nowTime: formatDistanceToNowStrict(this.props.created, { addSuffix: true }),
   };
 
   onCheckBoxClick = () => {
@@ -12,8 +14,24 @@ export default class Task extends Component {
     });
   };
 
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({
+      nowTime: formatDistanceToNowStrict(this.props.created, {
+        addSuffix: true,
+      }),
+    });
+  }
+
   render() {
-    let { className, description, created, onDeleted } = this.props;
+    let { className, description, onDeleted } = this.props;
     const { done } = this.state;
 
     if (done) {
@@ -33,7 +51,7 @@ export default class Task extends Component {
           />
           <label>
             <span className="description">{description} </span>
-            <span className="created">{created}</span>
+            <span className="created">{this.state.nowTime}</span>
           </label>
           <button className="icon icon-edit"></button>
           <button className="icon icon-destroy" onClick={onDeleted}></button>
