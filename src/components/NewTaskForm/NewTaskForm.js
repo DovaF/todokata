@@ -1,9 +1,20 @@
 import React, { Component } from "react";
 import "./NewTaskForm.css";
+import PropTypes from "prop-types";
 
 export default class NewTaskForm extends Component {
   state = {
     value: "",
+  };
+
+  static propTypes = {
+    autoFocus: PropTypes.bool,
+    placeholder: PropTypes.string,
+    value: PropTypes.string,
+  };
+
+  static defaultProps = {
+    autoFocus: false,
   };
 
   onChanging = (e) => {
@@ -21,9 +32,9 @@ export default class NewTaskForm extends Component {
   };
 
   render() {
-    const { className, placeholder, autoFocus = false } = this.props;
+    const { className, placeholder, autoFocus } = this.props;
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} onChange={() => {}}>
         <input
           className={className}
           placeholder={placeholder}
