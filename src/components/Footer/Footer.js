@@ -17,6 +17,19 @@ export default class Footer extends Component {
     doneCounter: PropTypes.number.isRequired,
   };
 
+  static defaultProps = {
+    onFilter: () => {},
+    onClear: () => {},
+    filters: [
+      {
+        key: 0,
+        label: " ",
+        className: " ",
+      },
+    ],
+    doneCounter: 0,
+  };
+
   render() {
     const { onFilter, onClear, filters, doneCounter } = this.props;
     let items = filters.map((item) => {

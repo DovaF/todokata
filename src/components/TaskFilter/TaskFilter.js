@@ -1,14 +1,28 @@
-import React from "react";
+import React, { Component } from "react";
 import "./TaskFilter.css";
+import PropTypes from "prop-types";
 
-const TaskFilter = ({ label, className, onFilter }) => {
-  return (
-    <li>
-      <button onClick={() => onFilter(label)} className={className}>
-        {label}
-      </button>
-    </li>
-  );
-};
+export default class TaskFilter extends Component {
+  static defaultProps = {
+    label: " ",
+    className: " ",
+    onFilter: () => {},
+  };
 
-export default TaskFilter;
+  static propTypes = {
+    label: PropTypes.string,
+    className: PropTypes.string,
+    onFilter: PropTypes.func,
+  };
+
+  render() {
+    const { label, className, onFilter } = this.props;
+    return (
+      <li>
+        <button onClick={() => onFilter(label)} className={className}>
+          {label}
+        </button>
+      </li>
+    );
+  }
+}

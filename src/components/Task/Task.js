@@ -5,23 +5,32 @@ import PropTypes from "prop-types";
 
 export default class Task extends Component {
   state = {
-    nowTime: formatDistanceToNowStrict(this.props.created, { addSuffix: true }),
+    timeFromCreating: formatDistanceToNowStrict(this.props.created, {
+      addSuffix: true,
+    }),
     inputValue: this.props.description,
   };
 
   static propTypes = {
-    className: PropTypes.string,
     description: PropTypes.string.isRequired,
     done: PropTypes.bool.isRequired,
     editing: PropTypes.bool.isRequired,
+    className: PropTypes.string,
     created: PropTypes.instanceOf(Date),
+    onDeleted: PropTypes.func,
+    onCheckBoxClick: PropTypes.func,
+    onEditing: PropTypes.func,
   };
 
   static defaultProps = {
-    description: "A new Task",
+    description: "",
     done: false,
     editing: false,
     created: new Date(),
+    className: " ",
+    onDeleted: () => {},
+    onCheckBoxClick: () => {},
+    onEditing: () => {},
   };
 
   componentDidMount() {
@@ -34,7 +43,7 @@ export default class Task extends Component {
 
   tick() {
     this.setState({
-      nowTime: formatDistanceToNowStrict(this.props.created, {
+      timeFromCreating: formatDistanceToNowStrict(this.props.created, {
         addSuffix: true,
       }),
     });
@@ -53,15 +62,15 @@ export default class Task extends Component {
 
   render() {
     let {
-      className,
       description,
+      done,
+      editing,
+      className,
       onDeleted,
       onCheckBoxClick,
       onEditing,
-      done,
-      editing,
     } = this.props;
-    const { nowTime, inputValue } = this.state;
+    const { timeFromCreating, inputValue } = this.state;
 
     if (done) {
       className = "completed";
@@ -81,7 +90,7 @@ export default class Task extends Component {
           />
           <label>
             <span className="description">{description} </span>
-            <span className="created">{nowTime}</span>
+            <span className="created">{timeFromCreating}</span>
           </label>
           <button className="icon icon-edit" onClick={onEditing}></button>
           <button className="icon icon-destroy" onClick={onDeleted}></button>

@@ -10,11 +10,13 @@ export default class NewTaskForm extends Component {
   static propTypes = {
     autoFocus: PropTypes.bool,
     placeholder: PropTypes.string,
-    value: PropTypes.string,
+    className: PropTypes.string,
   };
 
   static defaultProps = {
     autoFocus: false,
+    placeholder: "What needs to be done?",
+    className: " ",
   };
 
   onChanging = (e) => {

@@ -7,6 +7,9 @@ export default class AppHeader extends Component {
   static propTypes = {
     onAdded: PropTypes.func.isRequired,
   };
+  static defaultProps = {
+    onAdded: () => {},
+  };
 
   render() {
     const { onAdded } = this.props;

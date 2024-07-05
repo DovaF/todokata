@@ -30,6 +30,13 @@ export default class TodoApp extends Component {
     };
   }
 
+  toggleProperty = (arr, id, property) => {
+    let newTodoData = arr.slice();
+    const idx = newTodoData.findIndex((item) => item.id === id);
+    newTodoData[idx][property] = !newTodoData[idx][property];
+    return newTodoData;
+  };
+
   createTask(description) {
     return {
       id: this.maxId++,
@@ -40,68 +47,11 @@ export default class TodoApp extends Component {
     };
   }
 
-  onCheckBoxClick = (id) => {
-    this.setState(({ tasks }) => {
-      return {
-        tasks: this.toggleProperty(tasks, id, "done"),
-      };
-    });
-  };
-
-  toggleProperty = (arr, id, property) => {
-    let newTodoData = arr.slice();
-    const idx = newTodoData.findIndex((item) => item.id === id);
-    newTodoData[idx][property] = !newTodoData[idx][property];
-    return newTodoData;
-  };
-
   addTask = (description) => {
     const newTask = this.createTask(description);
     this.setState(({ tasks }) => {
       return {
         tasks: [...tasks.slice(), newTask],
-      };
-    });
-  };
-
-  onEditing = (id) => {
-    this.setState(({ tasks }) => {
-      return {
-        tasks: this.toggleProperty(tasks, id, "editing"),
-      };
-    });
-  };
-
-  filterArrByProp = (filterProp, arr) => {
-    const newArray = arr.filter((task) => task.done === filterProp);
-    return newArray;
-  };
-
-  onFilter = (prop) => {
-    this.setState(({ filter, filters }) => {
-      const filtersCopy = filters.slice();
-      const newFilters = filtersCopy.map((item) => {
-        if (item.label === prop) {
-          item.className = "selected";
-        } else {
-          delete item.className;
-        }
-        return item;
-      });
-
-      return {
-        filter: prop,
-        filters: newFilters,
-      };
-    });
-  };
-
-  onClear = () => {
-    this.setState(({ tasks }) => {
-      const tasksCopy = tasks.slice();
-      const newTasks = tasksCopy.filter((item) => !item.done);
-      return {
-        tasks: newTasks,
       };
     });
   };
@@ -128,6 +78,56 @@ export default class TodoApp extends Component {
       let newTasks = tasks.filter((item) => item.id !== id);
       return { tasks: newTasks };
     });
+  };
+
+  onCheckBoxClick = (id) => {
+    this.setState(({ tasks }) => {
+      return {
+        tasks: this.toggleProperty(tasks, id, "done"),
+      };
+    });
+  };
+
+  onClear = () => {
+    this.setState(({ tasks }) => {
+      const tasksCopy = tasks.slice();
+      const newTasks = tasksCopy.filter((item) => !item.done);
+      return {
+        tasks: newTasks,
+      };
+    });
+  };
+
+  onEditing = (id) => {
+    this.setState(({ tasks }) => {
+      return {
+        tasks: this.toggleProperty(tasks, id, "editing"),
+      };
+    });
+  };
+
+  onFilter = (prop) => {
+    this.setState(({ filter, filters }) => {
+      const filtersCopy = filters.slice();
+      const newFilters = filtersCopy.map((item) => {
+        if (item.label === prop) {
+          item.className = "selected";
+        } else {
+          delete item.className;
+        }
+        return item;
+      });
+
+      return {
+        filter: prop,
+        filters: newFilters,
+      };
+    });
+  };
+
+  filterArrByProp = (filterProp, arr) => {
+    const newArray = arr.filter((task) => task.done === filterProp);
+    return newArray;
   };
 
   render() {
