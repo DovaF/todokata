@@ -1,7 +1,8 @@
-import React, { Component } from "react";
-import "./Footer.css";
-import PropTypes from "prop-types";
-import TaskFilter from "../TaskFilter";
+import React, { Component } from 'react'
+import './Footer.css'
+import PropTypes from 'prop-types'
+
+import TaskFilter from '../TaskFilter'
 
 export default class Footer extends Component {
   static propTypes = {
@@ -15,7 +16,7 @@ export default class Footer extends Component {
       })
     ),
     doneCounter: PropTypes.number.isRequired,
-  };
+  }
 
   static defaultProps = {
     onFilter: () => {},
@@ -23,19 +24,19 @@ export default class Footer extends Component {
     filters: [
       {
         key: 0,
-        label: " ",
-        className: " ",
+        label: ' ',
+        className: ' ',
       },
     ],
     doneCounter: 0,
-  };
+  }
 
   render() {
-    const { onFilter, onClear, filters, doneCounter } = this.props;
+    const { onFilter, onClear, filters, doneCounter } = this.props
     let items = filters.map((item) => {
-      const { key, ...itemProps } = item;
-      return <TaskFilter key={key} onFilter={onFilter} {...itemProps} />;
-    });
+      const { key, ...itemProps } = item
+      return <TaskFilter key={key} onFilter={onFilter} {...itemProps} />
+    })
 
     return (
       <footer className="footer">
@@ -45,6 +46,6 @@ export default class Footer extends Component {
           Clear completed
         </button>
       </footer>
-    );
+    )
   }
 }

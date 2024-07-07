@@ -1,7 +1,9 @@
-import React, { Component } from "react";
-import Task from "../Task";
-import "./TaskList.css";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+import Task from '../Task'
+
+import './TaskList.css'
 
 export default class TaskList extends Component {
   static propTypes = {
@@ -19,16 +21,16 @@ export default class TaskList extends Component {
     onCheckBoxClick: PropTypes.func.isRequired,
     onEditingTask: PropTypes.func.isRequired,
     onEditing: PropTypes.func.isRequired,
-  };
+  }
 
   static defaultProps = {
     tasks: [
       {
-        description: "",
+        description: '',
         done: false,
         editing: false,
         created: new Date(),
-        className: " ",
+        className: ' ',
         onDeleted: () => {},
         onCheckBoxClick: () => {},
         onEditing: () => {},
@@ -39,13 +41,12 @@ export default class TaskList extends Component {
     onEditing: () => {},
     onEditingTask: () => {},
     onCheckBoxClick: () => {},
-  };
+  }
 
   render() {
-    const { tasks, onDeleted, onEditing, onCheckBoxClick, onEditingTask } =
-      this.props;
+    const { tasks, onDeleted, onEditing, onCheckBoxClick, onEditingTask } = this.props
     let items = tasks.map((item) => {
-      const { id, ...itemOptions } = item;
+      const { id, ...itemOptions } = item
       return (
         <Task
           key={id}
@@ -55,8 +56,8 @@ export default class TaskList extends Component {
           onCheckBoxClick={() => onCheckBoxClick(id)}
           onEditingTask={(value) => onEditingTask(id, value)}
         />
-      );
-    });
-    return <ul className="todo-list">{items}</ul>;
+      )
+    })
+    return <ul className="todo-list">{items}</ul>
   }
 }

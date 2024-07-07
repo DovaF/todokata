@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import "./Task.css";
-import { formatDistanceToNowStrict } from "date-fns";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import './Task.css'
+import { formatDistanceToNowStrict } from 'date-fns'
+import PropTypes from 'prop-types'
 
 export default class Task extends Component {
   state = {
@@ -9,7 +9,7 @@ export default class Task extends Component {
       addSuffix: true,
     }),
     inputValue: this.props.description,
-  };
+  }
 
   static propTypes = {
     description: PropTypes.string.isRequired,
@@ -20,25 +20,25 @@ export default class Task extends Component {
     onDeleted: PropTypes.func,
     onCheckBoxClick: PropTypes.func,
     onEditing: PropTypes.func,
-  };
+  }
 
   static defaultProps = {
-    description: "",
+    description: '',
     done: false,
     editing: false,
     created: new Date(),
-    className: " ",
+    className: ' ',
     onDeleted: () => {},
     onCheckBoxClick: () => {},
     onEditing: () => {},
-  };
+  }
 
   componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 5000);
+    this.timerID = setInterval(() => this.tick(), 5000)
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerID);
+    clearInterval(this.timerID)
   }
 
   tick() {
@@ -46,48 +46,35 @@ export default class Task extends Component {
       timeFromCreating: formatDistanceToNowStrict(this.props.created, {
         addSuffix: true,
       }),
-    });
+    })
   }
 
   onChanging = (e) => {
     this.setState({
       inputValue: e.target.value,
-    });
-  };
+    })
+  }
 
   onSubmit = (e) => {
-    e.preventDefault();
-    this.props.onEditingTask(this.state.inputValue);
-  };
+    e.preventDefault()
+    this.props.onEditingTask(this.state.inputValue)
+  }
 
   render() {
-    let {
-      description,
-      done,
-      editing,
-      className,
-      onDeleted,
-      onCheckBoxClick,
-      onEditing,
-    } = this.props;
-    const { timeFromCreating, inputValue } = this.state;
+    let { description, done, editing, className, onDeleted, onCheckBoxClick, onEditing } = this.props
+    const { timeFromCreating, inputValue } = this.state
 
     if (done) {
-      className = "completed";
+      className = 'completed'
     }
     if (editing) {
-      className = "editing";
+      className = 'editing'
     }
 
     return (
       <li className={className}>
         <div className="view">
-          <input
-            className="toggle"
-            type="checkbox"
-            checked={done}
-            onChange={onCheckBoxClick}
-          />
+          <input className="toggle" type="checkbox" checked={done} onChange={onCheckBoxClick} />
           <label>
             <span className="description">{description} </span>
             <span className="created">{timeFromCreating}</span>
@@ -97,15 +84,10 @@ export default class Task extends Component {
         </div>
         {editing ? (
           <form onSubmit={this.onSubmit} onChange={() => {}}>
-            <input
-              type="text"
-              className="edit"
-              value={inputValue}
-              onChange={this.onChanging}
-            />
+            <input type="text" className="edit" value={inputValue} onChange={this.onChanging} />
           </form>
         ) : null}
       </li>
-    );
+    )
   }
 }

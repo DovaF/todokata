@@ -1,9 +1,0 @@
--TodoApp
-    -AppHeader
-        -NewTaskForm
-    -TaskList
-        -Task
-        -Task
-        -Task
-    -Footer
-        -TaskFilter        
