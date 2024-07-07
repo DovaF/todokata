@@ -30,6 +30,9 @@
         "printWidth": 120,
         "semi": false,
         "bracketSpacing": true
+      },
+      {
+        "usePrettierrc": false
       }
     ],
     "linebreak-style": [0, "unix"],

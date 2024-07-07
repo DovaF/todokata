@@ -21,7 +21,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write src/**/*.js"
+    "format": "prettier --write src/**/*.js",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [
@@ -58,12 +59,11 @@
     "lint-staged": "^15.2.7",
     "prettier": "3.3.2"
   },
-  "husky":{
-    "hooks":{
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged":{
-    "*":["npm run lint","npm run lint:fix","npm run format","git add"]
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,html,css}": [
+      "npm run lint:fix",
+      "npm run format",
+      "git add ."
+    ]
   }
 }
